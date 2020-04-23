@@ -51,6 +51,22 @@ class Connection
         }        
     }
 
+    public function getLastId()
+    {
+        try 
+        {            
+            return $this->Connection->insert_id;
+        } 
+        catch (\Throwable $th) 
+        {
+            return false;
+        }        
+    }
+
+
+
+
+
     public function CloseConnection()
     {
         $this->Connection->close();

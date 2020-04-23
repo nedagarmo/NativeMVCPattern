@@ -105,6 +105,32 @@ ALTER TABLE `user`
   ADD CONSTRAINT `fk_user_person` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`);
 COMMIT;
 
+
+
+CREATE TABLE `task` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,  
+  `name` varchar(200) NOT NULL,
+  `description` varchar(25) NOT NULL,
+  `state` int(1) NOT NULL,
+  `init_date` DATE NOT NULL,
+  `finish_date` DATE NOT NULL,
+  `person_id` int(11) NOT NULL,
+  primary key(`id`),
+  foreign key (`person_id`) references `user`(`person_id`) on update cascade on delete restrict
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `taskXperson` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,  
+  `task_id` int(11) NOT NULL,
+  `person_id` int(11) NOT NULL,
+  primary key(`id`),
+  foreign key (`task_id`) references `task`(`id`) on update cascade on delete restrict,
+  foreign key (`person_id`) references `person`(`id`) on update cascade on delete restrict
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
