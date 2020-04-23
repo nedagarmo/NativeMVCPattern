@@ -29,8 +29,8 @@
                     <div class="form-group">
                          <b>Creador</b>
                          <select name="creator" id="creator" class="form-control border border-success bg-dark text-white">
-                             <?php foreach ($people as $person) : ?>
-                                 <option value="<?= $person[0]?>" selected><?= strtoupper($person[1])?></option> 
+                             <?php foreach ($users as $user) : ?>
+                                 <option value="<?= $user[0]?>" selected><?= strtoupper($user[1])?></option> 
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -39,7 +39,7 @@
                          <div class="row">                  
                                 <?php foreach ($people as $person) : ?>
                                     <div class="col-md-4">
-                                        <input type="checkbox" value="<?= $person[0]?>" name="coworkers[]"><?= strtoupper($person[1])?></input> 
+                                        <input type="checkbox" value="<?= $person[0]?>" name="coworkers[]" class="form-check-input" ><?= strtoupper($person[1])?></input> 
                                     </div>
                                 <?php endforeach; ?>     
                             </div>                  
@@ -51,3 +51,5 @@
 				</form>
             </div>
         </div>
+
+

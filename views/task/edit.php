@@ -30,8 +30,8 @@
                     <div class="form-group">
                          <b>Creador</b>
                          <select name="creator" id="creator" class="form-control border border-success bg-dark text-white">
-                             <?php foreach ($people as $person) : ?>
-                                 <option value="<?= $person[0]?>" <?=$task[6]==$person[0]?"selected":"" ?>><?= strtoupper($person[1])?></option> 
+                             <?php foreach ($users as $user) : ?>
+                                 <option value="<?= $user[0]?>" <?=$task[6]==$user[0]?"selected":"" ?>><?= strtoupper($user[1])?></option> 
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -41,21 +41,21 @@
                                 <?php                            
                                     foreach ($people as $person) :
                                         if(count($task[8])>0){
-                                            foreach ($task[8] as $coworkers) :                                                                                                                                                                                 
+                                            foreach ($task[8] as $coworker) :
+                                                if($coworker[0]==$person[0]){
+                                                    $selected= true;
+                                                   break;
+                                                }else{
+                                                    $selected= false;
+                                                }
+                                           endforeach;                                                                                    
+
                                 ?>                                        
                                             <div class="col-md-4">
-                                                <input type="checkbox" value="<?= $person[0]?>" name="coworkers[]" <?=  $coworkers[0]==$person[0] ?"checked":"" ?>    ><?= strtoupper($person[1])?></input> 
+                                                <input type="checkbox" value="<?= $person[0]?>" name="coworkers[]" <?=$selected==true?"checked":""?>   class="form-check-input"><?= strtoupper($person[1])?></input> 
                                             </div>
-                                <?php
-                                            endforeach;
-                                            }else{
-                                ?>
-                                            <div class="col-md-4">
-                                                <input type="checkbox" value="<?= $person[0]?>" name="coworkers[]" ><?= strtoupper($person[1])?></input> 
-                                            </div>
-                                <?php 
-                                                
-                                            }
+                                <?php                                                                                            
+                                        }                                                                                                                    
                                      endforeach;
                                      
                                 

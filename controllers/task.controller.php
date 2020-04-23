@@ -3,6 +3,7 @@
 require_once './models/task_model.php';
 require_once './models/person_model.php';
 
+
 class TaskController
 {
     private $model;
@@ -11,7 +12,7 @@ class TaskController
     public function __construct()
     {
        $this->model = new task_model();
-       $this->modelPersona = new person_model();
+       $this->modelPersona = new person_model();      
     }
 
 
@@ -34,6 +35,7 @@ class TaskController
     public function insert()
     {
         $people = $this->modelPersona->list();
+        $users = $this->modelPersona->list_person_user();
         require_once "./views/layout/header.php";
         require_once "./views/task/insert.php";
         require_once "./views/layout/footer.php";
@@ -45,9 +47,10 @@ class TaskController
         $id = isset($_GET['id']) ? $_GET['id'] : null;
         $this->model->set_id($id);
         $task = $this->model->get()[0];
-        $coworkers = $this->model->getCoworkers($task[0]);    
+        $coworkers = $this->model->getCoworkers($task[0]);      
         array_push ( $task , $coworkers );
         $people = $this->modelPersona->list();
+        $users = $this->modelPersona->list_person_user();
         require_once "./views/layout/header.php";
         require_once "./views/task/edit.php";
         require_once "./views/layout/footer.php";

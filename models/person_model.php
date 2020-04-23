@@ -42,6 +42,13 @@ class person_model
         return $this->db->ExecQuery($sql);
     }
 
+    public function list_person_user()
+    {
+        $sql = "SELECT p.id,p.name from user u, person p where p.id = u.person_id ";
+
+        return $this->db->ExecSelect($sql);
+    }
+
     public function delete()
     {
         $sql1 = "DELETE FROM user WHERE person_id = $this->id";
@@ -102,6 +109,7 @@ class person_model
     {
         $this->phone = $phone;
     }
+
 
 }
 
