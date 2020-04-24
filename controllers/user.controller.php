@@ -6,11 +6,10 @@ class UserController
 {
     private $model;
 
-    public function __construct()
-    {
-       
-    }
-
+    /**
+     * Acción Insert.  Encargada de mostrar el formulario de registro de un usuario.
+     * @return void
+    */
     public function insert()
     {
         $person_id = isset($_GET['id']) ? $_GET['id'] : null;
@@ -20,6 +19,11 @@ class UserController
         require_once "./views/layout/footer.php";
     }
 
+    /**
+     * Acción Create.  Encargada de validar la información proporcionada por el usuario
+     * y ejecutar la operación insert respectiva.
+     * @return void
+    */
     public function create()
     {
         $username = isset($_POST['username']) ? $_POST['username'] : null;
@@ -50,6 +54,10 @@ class UserController
         }   
     }
 
+    /**
+     * Acción Edit.  Encargada de mostrar el formulario de edición de un usuario.
+     * @return void
+    */
     public function edit()
     {
         $id = isset($_GET['id']) ? $_GET['id'] : null;
@@ -63,6 +71,11 @@ class UserController
         require_once "./views/layout/footer.php";
     }
 
+    /**
+     * Acción Update.  Encargada de validar la información proporcionada por el usuario
+     * y ejecutar la respectiva operación update.
+     * @return void
+    */
     public function update()
     {
         $person_id = isset($_POST['person_id']) ? $_POST['person_id'] : null;

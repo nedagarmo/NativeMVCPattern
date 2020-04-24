@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-04-2020 a las 18:57:01
+-- Tiempo de generación: 24-04-2020 a las 22:34:49
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.4
 
@@ -20,11 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `taskmanager`
 --
-
-CREATE DATABASE IF NOT EXISTS `taskmanager` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `taskmanager`;
-
--- --------------------------------------------------------
 
 -- --------------------------------------------------------
 
@@ -45,7 +40,52 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`id`, `name`, `identification`, `email`, `phone`) VALUES
-(27, 'DUVAN ANGARITA', '1093758636', 'duvan_angarita_1001@hotmail.com', '3106507015');
+(27, 'DUVAN ANGARITA', '1093758636', 'duvan_angarita_1001@hotmail.com', '3106507015'),
+(30, 'NELSON GARZÓN', '123456780', 'nedagarmo@gmail.com', '3204449438'),
+(31, 'DANIEL MENESES', '978654255', 'dmeneses55@yahoo.com', '3123496652');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `task`
+--
+
+CREATE TABLE `task` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `description` varchar(25) NOT NULL,
+  `state` int(1) NOT NULL,
+  `init_date` date NOT NULL,
+  `finish_date` date NOT NULL,
+  `person_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `task`
+--
+
+INSERT INTO `task` (`id`, `name`, `description`, `state`, `init_date`, `finish_date`, `person_id`) VALUES
+(1, 'Desarrollo de vistas del sistema', 'Desarrollo', 1, '2020-04-24', '2020-04-25', 27);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `taskxperson`
+--
+
+CREATE TABLE `taskxperson` (
+  `id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `person_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `taskxperson`
+--
+
+INSERT INTO `taskxperson` (`id`, `task_id`, `person_id`) VALUES
+(2, 1, 27),
+(3, 1, 31);
 
 -- --------------------------------------------------------
 
@@ -64,7 +104,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `person_id`) VALUES
-('1111111', '123456', 27);
+('1', '123', 27);
 
 --
 -- Índices para tablas volcadas
@@ -76,6 +116,21 @@ INSERT INTO `user` (`username`, `password`, `person_id`) VALUES
 ALTER TABLE `person`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `identification` (`identification`);
+
+--
+-- Indices de la tabla `task`
+--
+ALTER TABLE `task`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `person_id` (`person_id`);
+
+--
+-- Indices de la tabla `taskxperson`
+--
+ALTER TABLE `taskxperson`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `task_id` (`task_id`),
+  ADD KEY `person_id` (`person_id`);
 
 --
 -- Indices de la tabla `user`
@@ -92,11 +147,36 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `person`
 --
 ALTER TABLE `person`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT de la tabla `task`
+--
+ALTER TABLE `task`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `taskxperson`
+--
+ALTER TABLE `taskxperson`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `task`
+--
+ALTER TABLE `task`
+  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `user` (`person_id`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `taskxperson`
+--
+ALTER TABLE `taskxperson`
+  ADD CONSTRAINT `taskxperson_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `taskxperson_ibfk_2` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `user`
@@ -104,32 +184,6 @@ ALTER TABLE `person`
 ALTER TABLE `user`
   ADD CONSTRAINT `fk_user_person` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`);
 COMMIT;
-
-
-
-CREATE TABLE `task` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,  
-  `name` varchar(200) NOT NULL,
-  `description` varchar(25) NOT NULL,
-  `state` int(1) NOT NULL,
-  `init_date` DATE NOT NULL,
-  `finish_date` DATE NOT NULL,
-  `person_id` int(11) NOT NULL,
-  primary key(`id`),
-  foreign key (`person_id`) references `user`(`person_id`) on update cascade on delete restrict
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE `taskXperson` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,  
-  `task_id` int(11) NOT NULL,
-  `person_id` int(11) NOT NULL,
-  primary key(`id`),
-  foreign key (`task_id`) references `task`(`id`) on update cascade on delete restrict,
-  foreign key (`person_id`) references `person`(`id`) on update cascade on delete restrict
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -1,5 +1,10 @@
 <?php
 
+/** 
+ * Clase de conexión
+ * En cargada de permitir el acceso a la base de datos, de todo el sistema, 
+ * mediante el controlador mysqli.
+*/
 class Connection 
 {
     private $Server;
@@ -8,6 +13,11 @@ class Connection
     private $Database;
     private $Connection;
 
+    /**
+     * Constructor de la clase. Será el encargado de crear la conexión y encapsularla en la propiedad
+     * correspondiente.
+     * @return void
+    */
     public function __construct()
     {
         $this->Server = "localhost";
@@ -23,6 +33,12 @@ class Connection
         }
     }
 
+    /**
+     * Este método se encargará de ejecutar la query parametrizada y devolverá un array 
+     * con los resultados.
+     * @param $sql es la query que se ejecutará.
+     * @return array
+    */
     public function ExecSelect($sql)
     {
         try 
@@ -37,6 +53,12 @@ class Connection
         
     }
 
+    /**
+     * Este método se encargará de ejecutar la query parametrizada y devolverá un 
+     * bool según lo haya hecho con o sin errores.
+     * @param $sql es la query que se ejecutará.
+     * @return boolean
+    */
     public function ExecQuery($sql)
     {
         try 
@@ -51,6 +73,10 @@ class Connection
         }        
     }
 
+    /**
+     * Este método se encargará de consultar el id del último registro insertado.
+     * @return int
+    */
     public function getLastId()
     {
         try 
@@ -63,10 +89,11 @@ class Connection
         }        
     }
 
-
-
-
-
+    /**
+     * Este método se encargará de cerrar la conexión que se abre con la instancia
+     * de esta clase, pues se crea en el constructor.
+     * @return void
+    */
     public function CloseConnection()
     {
         $this->Connection->close();

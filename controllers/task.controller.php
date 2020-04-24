@@ -9,14 +9,20 @@ class TaskController
     private $model;
     private $modelPersona;
 
+    /**
+     * Constructor.  Encapsula el modelo en la propeidad correspondiente.
+     * @return void
+    */
     public function __construct()
     {
        $this->model = new task_model();
        $this->modelPersona = new person_model();      
     }
-
-
     
+    /**
+     * Acción Index.  Encargada de mostrar la lista de tareas guardadas en la base de datos.
+     * @return void
+    */
     public function index()
     {         
         $tasks = $this->model->list();
@@ -31,7 +37,10 @@ class TaskController
         require_once "./views/layout/footer.php";
     }
 
-
+    /**
+     * Acción Insert.  Encargada de mostrar el formulario de registro de una tarea.
+     * @return void
+    */
     public function insert()
     {
         $people = $this->modelPersona->list();
@@ -41,7 +50,10 @@ class TaskController
         require_once "./views/layout/footer.php";
     }
 
-
+    /**
+     * Acción Edit.  Encargada de mostrar el formulario de edición de una tarea
+     * @return void
+    */
     public function edit()
     {
         $id = isset($_GET['id']) ? $_GET['id'] : null;
@@ -56,7 +68,11 @@ class TaskController
         require_once "./views/layout/footer.php";
     }
 
-
+    /**
+     * Acción Create.  Encargada de validar la información proporcionada por el usuario
+     * y ejecutar la operación insert respectiva.
+     * @return void
+    */
     public function create()
     {
         $name = isset($_POST['name']) ? $_POST['name'] : null;
@@ -81,9 +97,7 @@ class TaskController
             $this->model->set_finish_date($finishDate);
             $this->model->set_creator($creator);
             $this->model->set_coworkers($coworkers);
-          
-        
-    
+  
             if($this->model->insert())
             {
                 $this->index();
@@ -95,7 +109,11 @@ class TaskController
         }   
     }
 
-
+    /**
+     * Acción Delete.  Encargada de mostrar el formulario de confirmación para eliminar
+     * el registro.
+     * @return void
+    */
     public function delete()
     {
         $id = isset($_GET['id']) ? $_GET['id'] : null;       
@@ -109,7 +127,11 @@ class TaskController
         require_once "./views/layout/footer.php";
     }
 
-
+    /**
+     * Acción Confirm_Delete.  Encargada de ejecutar la eliminación del registro en la 
+     * base de datos.
+     * @return void
+    */
     public function confirm_delete()
     {
         $id = isset($_POST['id']) ? $_POST['id'] : null;
@@ -134,7 +156,11 @@ class TaskController
         }   
     }
 
-
+    /**
+     * Acción Update.  Encargada de validar la información proporcionada por el usuario
+     * y ejecutar la respectiva operación update.
+     * @return void
+    */
     public function update()
     {
         $id = isset($_POST['id']) ? $_POST['id'] : null;
@@ -173,12 +199,6 @@ class TaskController
             }
         }   
     }
-
-
-   
-
 }
-
-
 
 ?>
